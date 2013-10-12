@@ -1,4 +1,10 @@
 class Encryptor
+  attr_reader :rotation
+
+  def initialize(rotation)
+    @rotation = rotation
+  end
+
   def encrypt(text)
     letters = letters_of(text)
 
@@ -30,19 +36,28 @@ class Encryptor
   end
 
   def encrypt_letter(letter)
-    lowercase_letter = letter.downcase
-    cipher[lowercase_letter]
+    encrypt_cipher[letter]
   end
 
   def decrypt_letter(letter)
-    lowercase_letter = letter.downcase
-    cipher[lowercase_letter]
+    decrypt_cipher[letter]
   end
 
-  def cipher(rotate = 13)
-    characters = ('a'..'z').to_a
-    rotate_characters = characters.rotate(rotate)
-    pairs = characters.zip(rotate_characters)
+  def encrypt_cipher
+    pairs = suported_characters.zip(rotated_characters)
     Hash[pairs]
+  end
+
+  def decrypt_cipher
+    pairs = rotated_characters.zip(suported_characters)
+    Hash[pairs]
+  end
+
+  def suported_characters
+    (' '..'z').to_a
+  end
+
+  def rotated_characters
+    suported_characters.rotate(rotation)
   end
 end
