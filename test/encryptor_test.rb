@@ -16,7 +16,10 @@ class EncryptorTest < Minitest::Test
   end
 
   def test_encrypt_string
-    skip
-    assert_equal '', @encryptor.encrypt('Hello')
+    assert_equal 'uryyb', @encryptor.encrypt('Hello')
+  end
+
+  def test_decrypt_string
+    assert_equal 'secrets', @encryptor.decrypt('frpergf')
   end
 end

@@ -1,10 +1,35 @@
 class Encryptor
-  def encrypt(letter)
+  def encrypt(text)
+    letters = text.split('')
+
+    encrypted_letters = letters.collect do |letter|
+      encrypt_letter(letter)
+    end
+
+    encrypted_letters.join
+  end
+
+  def decrypt(text)
+    letters = text.split('')
+
+    decrypted_letters = letters.collect do |letter|
+      decrypt_letter(letter)
+    end
+
+    decrypted_letters.join
+  end
+
+  private
+
+  def encrypt_letter(letter)
     lowercase_letter = letter.downcase
     cipher[lowercase_letter]
   end
 
-  private
+  def decrypt_letter(letter)
+    lowercase_letter = letter.downcase
+    cipher[lowercase_letter]
+  end
 
   def cipher
     {
