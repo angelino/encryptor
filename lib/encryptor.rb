@@ -1,25 +1,33 @@
 class Encryptor
   def encrypt(text)
-    letters = text.split('')
+    letters = letters_of(text)
 
     encrypted_letters = letters.collect do |letter|
       encrypt_letter(letter)
     end
 
-    encrypted_letters.join
+    text_of(encrypted_letters)
   end
 
   def decrypt(text)
-    letters = text.split('')
+    letters = letters_of(text)
 
     decrypted_letters = letters.collect do |letter|
       decrypt_letter(letter)
     end
 
-    decrypted_letters.join
+    text_of(decrypted_letters)
   end
 
   private
+
+  def letters_of(text)
+    text.split('')
+  end
+
+  def text_of(letters)
+    letters.join
+  end
 
   def encrypt_letter(letter)
     lowercase_letter = letter.downcase
@@ -31,15 +39,10 @@ class Encryptor
     cipher[lowercase_letter]
   end
 
-  def cipher
-    {
-      'a' => 'n', 'b' => 'o', 'c' => 'p', 'd' => 'q',
-      'e' => 'r', 'f' => 's', 'g' => 't', 'h' => 'u',
-      'i' => 'v', 'j' => 'w', 'k' => 'x', 'l' => 'y',
-      'm' => 'z', 'n' => 'a', 'o' => 'b', 'p' => 'c',
-      'q' => 'd', 'r' => 'e', 's' => 'f', 't' => 'g',
-      'u' => 'h', 'v' => 'i', 'w' => 'j', 'x' => 'k',
-      'y' => 'l', 'z' => 'm'
-    }
+  def cipher(rotate = 13)
+    characters = ('a'..'z').to_a
+    rotate_characters = characters.rotate(rotate)
+    pairs = characters.zip(rotate_characters)
+    Hash[pairs]
   end
 end
